@@ -12,7 +12,14 @@
   "url": "",
   "logo": "",
   "capabilities": [],
-  "dependencies": [],
+  "dependencies": [
+    {
+      "appId": "40a945a0-6cf7-458c-9772-be132ff01600",
+      "name": "DXC Obrien Project",
+      "publisher": "DXC",   
+      "version": "1.0.0.0"
+    }    
+  ],
   "screenshots": [],
   "platform": "11.0.0.0",
   "application": "11.0.0.0",

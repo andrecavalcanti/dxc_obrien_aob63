@@ -4,9 +4,9 @@
         {
             "type": "al",
             "request": "launch",            
-            "name": "Your own server",
-            "server": "http://localhost",                    
-            "serverInstance": "NAV2018_CU8_NA",
+            "name": "Your own server",            
+            "server": "http://172.19.10.230",                      
+            "serverInstance": "NAV",
             "port"  : 7049, 
             "authentication": "Windows",
             //"tenant": "default",
