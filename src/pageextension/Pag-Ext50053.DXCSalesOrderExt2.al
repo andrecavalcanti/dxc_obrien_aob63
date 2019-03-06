@@ -1,4 +1,4 @@
-pageextension 50053 "DXCSalesOrderExt" extends "Sales Order" 
+pageextension 50053 "DXCSalesOrderExt2" extends "Sales Order" 
 {  
     layout
     {        
