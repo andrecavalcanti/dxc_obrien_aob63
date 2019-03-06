@@ -29,7 +29,7 @@ tableextension 50034 "DXCSalesLineExt2" extends "Sales Line" //MyTargetTableId
         SalesLine.SETRANGE(Type,SalesLine.Type::"G/L Account");
         SalesLine.SETRANGE("No.",SalesSetup."Freight G/L Acc. No.");
         // >> AOB-62
-        SalesHeader.GET(SalesLine."Document Type",SalesLine."Document No.");
+        SalesHeader.GET(Rec."Document Type",Rec."Document No.");
         IF (SalesHeader."DXC Freight Resource" <> '') THEN BEGIN  
           SalesLine.SETRANGE(Type,SalesLine.Type::Resource);
           SalesLine.SETRANGE("No.",SalesHeader."DXC Freight Resource");  

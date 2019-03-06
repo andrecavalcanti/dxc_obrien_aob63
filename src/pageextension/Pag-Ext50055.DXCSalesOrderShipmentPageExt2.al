@@ -31,7 +31,9 @@ pageextension 50055 "DXCSalesOrderShipmentPageExt2" extends "Sales Order Shipmen
                     if ApprovalsMgmt.PrePostApprovalCheckSales(Rec) then begin
                         if PrepaymentMgt.TestSalesPrepayment(Rec) then
                         ERROR(STRSUBSTNO(Text001,"Document Type","No."));
-
+                        // >> AOB-62
+                        FreightAmount := GetFreightAmount;
+                        // << AOB-62
                         if PrepaymentMgt.TestSalesPayment(Rec) then
                         ERROR(STRSUBSTNO(Text002,"Document Type","No."));
 
