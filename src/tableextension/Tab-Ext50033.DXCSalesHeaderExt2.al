@@ -2,7 +2,7 @@ tableextension 50033 "DXCSalesHeaderExt2" extends "Sales Header"
 { 
     fields
     {        
-        field(50007;"DXC Freight Resource";Code[20])
+        field(50008;"DXC Freight Resource";Code[20])
         {
             Caption = 'Freight Resource';
             DataClassification = ToBeClassified;
