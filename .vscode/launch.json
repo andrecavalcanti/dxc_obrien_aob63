@@ -5,13 +5,13 @@
             "type": "al",
             "request": "launch",            
             "name": "Your own server",            
-            "server": "http://172.26.82.200",                      
+            "server": "http://172.27.247.58",                      
             "serverInstance": "NAV",
             "port"  : 7049, 
             "authentication": "Windows",
             //"tenant": "default",
-            "startupObjectId": 22,            
-            "schemaUpdateMode": "Synchronize"
+            //"startupObjectId": 22,
+           "schemaUpdateMode": "Synchronize"
            //"schemaUpdateMode": "Recreate"
             //"startupObjectType": "Page",
             //"breakOnError": true
