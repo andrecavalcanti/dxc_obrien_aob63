@@ -32,8 +32,16 @@ tableextension 50034 "DXCSalesLineExt2" extends "Sales Line" //MyTargetTableId
         SalesLine.SETRANGE("Document No.","Document No.");
 
         // >> EC1.115
-        SalesLine.SETRANGE(Type,SalesLine.Type::"G/L Account");
-        SalesLine.SETRANGE("No.",SalesSetup."Freight G/L Acc. No.");
+        // >> AOB-62
+        // M SalesLine.SETRANGE(Type,SalesLine.Type::"G/L Account");
+        // M SalesLine.SETRANGE("No.",SalesSetup."Freight G/L Acc. No.");
+        
+        SalesHeader.GET(SalesLine."Document Type",SalesLine."Document No.");
+        IF (SalesHeader."DXC Freight Resource" <> '') THEN BEGIN  
+          SalesLine.SETRANGE(Type,SalesLine.Type::Resource);
+          SalesLine.SETRANGE("No.",SalesHeader."DXC Freight Resource");  
+        END;
+        // << AOB-62
         // "Quantity Shipped" will be equal to 0 until FreightAmount line successfully shipped
         SalesLine.SETRANGE("Quantity Shipped",0);
         IF SalesLine.FINDFIRST THEN BEGIN
@@ -51,8 +59,17 @@ tableextension 50034 "DXCSalesLineExt2" extends "Sales Line" //MyTargetTableId
           // >> EC1.75
           SalesLine.SuspendStatusCheck(TRUE);
           // << EC1.75
-          SalesLine.VALIDATE(Type,SalesLine.Type::"G/L Account");
-          SalesLine.VALIDATE("No.",SalesSetup."Freight G/L Acc. No.");
+          // >> AOB-62
+          IF SalesHeader."DXC Freight Resource" <> '' THEN BEGIN
+            SalesLine.VALIDATE(Type,SalesLine.Type::Resource);
+            SalesLine.VALIDATE("No.",SalesHeader."DXC Freight Resource");
+          END ELSE BEGIN
+          // << AOB-62
+            SalesLine.VALIDATE(Type,SalesLine.Type::"G/L Account");
+            SalesLine.VALIDATE("No.",SalesSetup."Freight G/L Acc. No.");
+          // >> AOB-62
+          END;
+          // << AOB-62
           SalesLine.VALIDATE(Description,FreightLineDescriptionTxt);
           SalesLine.VALIDATE(Quantity,FreightAmountQuantity);
           // >> EC1.75
