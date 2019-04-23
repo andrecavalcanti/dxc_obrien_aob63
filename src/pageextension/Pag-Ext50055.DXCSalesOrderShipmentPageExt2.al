@@ -2,7 +2,7 @@ pageextension 50055 "DXCSalesOrderShipmentPageExt2" extends "Sales Order Shipmen
 { 
     
     actions
-    {
+    {        
         addafter("P&ost")
         {
             action(DXCPost)
@@ -41,6 +41,48 @@ pageextension 50055 "DXCSalesOrderShipmentPageExt2" extends "Sales Order Shipmen
                         SalesLine.VALIDATE("Document No.","No.");
                         SalesLine.DXCInsertFreightLine(FreightAmount);
                         CODEUNIT.RUN(CODEUNIT::"Ship-Post (Yes/No)",Rec);
+                        if "Shipping No." = '-1' then
+                        ERROR('');
+                    end;
+                end;
+            }
+
+            action(DXCPostPrint)
+            {
+                CaptionML = ENU='Post and &Print',
+                            ESM='&Registrar',
+                            FRC='Rep&orter',
+                            ENC='Post and &Print';
+                Ellipsis = true;
+                Image = PostPrint;
+                Promoted = true;
+                PromotedCategory = Process;
+                PromotedIsBig = true;
+                ShortCutKey = 'Shift+F9';
+                ToolTipML = ENU='Finalize and prepare to print the document or journal. The values and quantities are posted to the related accounts. A report request window where you can specify what to include on the print-out.',
+                            ESM='Permite finalizar el documento o el diario registrando los importes y las cantidades en las cuentas relacionadas de los libros de su empresa.',
+                            FRC='Finalisez le document ou le journal en reportant les montants et les quantités sur les comptes concernés dans la comptabilité de la compagnie.',
+                            ENC='Finalize and prepare to print the document or journal. The values and quantities are posted to the related accounts. A report request window where you can specify what to include on the print-out.';
+
+                trigger OnAction();
+                var
+                    ApprovalsMgmt : Codeunit "Approvals Mgmt.";
+                    PrepaymentMgt : Codeunit "Prepayment Mgt.";
+                begin
+                    //AOB-21
+                    if ApprovalsMgmt.PrePostApprovalCheckSales(Rec) then begin
+                        if PrepaymentMgt.TestSalesPrepayment(Rec) then
+                        ERROR(STRSUBSTNO(Text001,"Document Type","No."));
+                        // >> AOB-62
+                        FreightAmount := GetFreightAmount;
+                        // << AOB-62
+                        if PrepaymentMgt.TestSalesPayment(Rec) then
+                        ERROR(STRSUBSTNO(Text002,"Document Type","No."));
+
+                        SalesLine.VALIDATE("Document Type","Document Type");
+                        SalesLine.VALIDATE("Document No.","No.");
+                        SalesLine.DXCInsertFreightLine(FreightAmount);
+                        CODEUNIT.RUN(CODEUNIT::"Ship-Post + Print",Rec);
                         if "Shipping No." = '-1' then
                         ERROR('');
                     end;

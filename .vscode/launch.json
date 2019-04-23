@@ -5,7 +5,7 @@
             "type": "al",
             "request": "launch",            
             "name": "Your own server",            
-            "server": "http://172.28.22.43",                      
+            "server": "http://172.28.24.191",                      
             "serverInstance": "NAV",
             "port"  : 7049, 
             "authentication": "Windows",

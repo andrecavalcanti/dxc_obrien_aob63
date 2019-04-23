@@ -36,7 +36,7 @@ tableextension 50034 "DXCSalesLineExt2" extends "Sales Line" //MyTargetTableId
         // M SalesLine.SETRANGE(Type,SalesLine.Type::"G/L Account");
         // M SalesLine.SETRANGE("No.",SalesSetup."Freight G/L Acc. No.");
         
-        SalesHeader.GET(SalesLine."Document Type",SalesLine."Document No.");
+        SalesHeader.GET(Rec."Document Type",Rec."Document No.");
         IF (SalesHeader."DXC Freight Resource" <> '') THEN BEGIN  
           SalesLine.SETRANGE(Type,SalesLine.Type::Resource);
           SalesLine.SETRANGE("No.",SalesHeader."DXC Freight Resource");  
@@ -45,6 +45,7 @@ tableextension 50034 "DXCSalesLineExt2" extends "Sales Line" //MyTargetTableId
         // "Quantity Shipped" will be equal to 0 until FreightAmount line successfully shipped
         SalesLine.SETRANGE("Quantity Shipped",0);
         IF SalesLine.FINDFIRST THEN BEGIN
+          SalesLine.SuspendStatusCheck(TRUE);
           SalesLine.VALIDATE(Quantity,FreightAmountQuantity);
           SalesLine.VALIDATE("Unit Price",FreightAmount);
           SalesLine.MODIFY;
