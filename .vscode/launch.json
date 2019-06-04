@@ -11,15 +11,15 @@
             // "port"  : 7049,
             // "authentication":"UserPassword",   
             // --- DEV ---         
-            // "server": "http://172.19.2.41",                    
-            // "serverInstance": "TPM-DEV",
-            // "port"  : 7059,
-            //"authentication": "Windows",   
+            "server": "http://172.19.2.41",                    
+            "serverInstance": "TPM-DEV",
+            "port"  : 7059,
+            "authentication": "Windows",   
             // --- TEST ---
-            "server": "http://172.19.2.41", 
-             "serverInstance": "DynamicsNAV110",         
-             "port"  : 7049,
-            "authentication": "Windows",            
+            // "server": "http://172.19.2.41", 
+            //  "serverInstance": "DynamicsNAV110",         
+            //  "port"  : 7049,
+            // "authentication": "Windows",            
             //"tenant": "default",
             //"startupObjectId": 22,
            "schemaUpdateMode": "Synchronize"
